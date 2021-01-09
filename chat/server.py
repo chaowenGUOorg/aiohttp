@@ -1,5 +1,5 @@
 from aiohttp import web, WSMsgType
-import pathlib, aiokafka, ssl
+import aiokafka, ssl
 import asyncio, uvloop
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
