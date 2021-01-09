@@ -1,0 +1,45 @@
+on:
+    push:
+    schedule:
+    - cron: '0 6,18 * * *'
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@main
+          if: github.event_name == 'push'
+        - run: |
+              echo "VERSION=`docker run python:slim python -c 'import platform; print(platform.python_version()[:3])'`" >> $GITHUB_ENV
+              #sudo systemctl stop docker
+              #jq '.experimental=true' /etc/docker/daemon.json | sudo tee /etc/docker/daemon.json
+              #sudo systemctl start docker
+              #docker info
+          if: github.event_name == 'push'
+        - uses: docker/login-action@master
+          if: github.event_name == 'push'
+          with:
+              username: chaowenguo
+              password: ${{secrets.DOCKER}}
+        - uses: docker/setup-buildx-action@master
+          if: github.event_name == 'push'
+        - uses: docker/build-push-action@master
+          if: github.event_name == 'push'
+          with:
+              push: true
+              tags: chaowenguo/aiohttp
+              build-args: VERSION=${{env.VERSION}}
+        - uses: docker/build-push-action@master
+          if: github.event_name == 'push'
+          with:
+              push: true
+              context: chat
+              tags: chaowenguo/chat:aiohttp
+              build-args: VERSION=${{env.VERSION}}
+        - uses: okteto/login@master
+          with:
+              token: ${{secrets.OKTETO}}
+        - uses: okteto/namespace@master
+          with:
+              namespace: chaowenguo
+        - uses: okteto/pipeline@master
+        #- run: sudo kubectl --kubeconfig=$RUNNER_TEMP/_github_home/.kube/config rollout restart deploy web chat
