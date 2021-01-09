@@ -1,5 +1,5 @@
 from aiohttp import web
-import ssl, pathlib, asyncpg, json, aredis, aiokafka
+import ssl, asyncpg, json, aredis, aiokafka
 import asyncio, uvloop
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
