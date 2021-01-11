@@ -13,7 +13,6 @@ jobs:
           with:
               python-version: '3.x'
         - run: |
-              echo "VERSION=`docker run python:slim python -c 'import platform; print(platform.python_version()[:3])'`" >> $GITHUB_ENV
               python version.py
               #sudo systemctl stop docker
               #jq '.experimental=true' /etc/docker/daemon.json | sudo tee /etc/docker/daemon.json
