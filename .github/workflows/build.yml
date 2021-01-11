@@ -13,6 +13,7 @@ jobs:
           with:
               python-version: '3.x'
         - run: |
+              pip install aiodocker
               python version.py
               #sudo systemctl stop docker
               #jq '.experimental=true' /etc/docker/daemon.json | sudo tee /etc/docker/daemon.json
