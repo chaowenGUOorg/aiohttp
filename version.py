@@ -1,7 +1,7 @@
 import asyncio, pathlib, os, aiodocker
 async def f():
     docker = aiodocker.Docker()
-    docker.images.pull('python', tag='slim')
+    await docker.images.pull('python', tag='slim')
     container = await docker.containers.create(config={'Cmd':['python', '-c', 'import platform; print(platform.python_version()[:3])'], 'Image':'python:slim'})
     await container.start()
     pathlib.Path(os.getenv('GITHUB_ENV')).write_text('VERSION=' + await container.log(stdout=True))
