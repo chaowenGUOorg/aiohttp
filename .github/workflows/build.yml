@@ -9,8 +9,8 @@ jobs:
         - uses: actions/checkout@main
           if: github.event_name == 'push'
         - run: |
-              cat $GITHUB_ENV
               echo "VERSION=`docker run python:slim python -c 'import platform; print(platform.python_version()[:3])'`" >> $GITHUB_ENV
+              cat $GITHUB_ENV
               #sudo systemctl stop docker
               #jq '.experimental=true' /etc/docker/daemon.json | sudo tee /etc/docker/daemon.json
               #sudo systemctl start docker
