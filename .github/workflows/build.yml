@@ -8,6 +8,10 @@ jobs:
         steps:
         - uses: actions/checkout@main
           if: github.event_name == 'push'
+        - uses: actions/setup-python@main
+          if: github.event_name == 'push'
+          with:
+              python-version: '3.x'
         - run: |
               echo "VERSION=`docker run python:slim python -c 'import platform; print(platform.python_version()[:3])'`" >> $GITHUB_ENV
               cat $GITHUB_ENV
