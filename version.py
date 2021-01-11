@@ -1,7 +1,10 @@
-import asyncio, pathlib, os
+import asyncio, pathlib, os, aiodocker
 async def f():
-    process = await asyncio.create_subprocess_exec('docker', 'run', 'python:slim', 'python', '-c', 'import platform; print(platform.python_version()[:3])', stdout=asyncio.subprocess.PIPE)
-    stdout, _ = await process.communicate()
-    pathlib.Path(os.getenv('GITHUB_ENV')).write_text('VERSION=' + stdout.decode())
+    docker = aiodocker.Docker()
+    container = await docker.containers.create(config={'Cmd':['python', '-c', 'import platform; print(platform.python_version()[:3])'], 'Image':'python:slim'})
+    await container.start()
+    pathlib.Path(os.getenv('GITHUB_ENV')).write_text('VERSION=' + await container.log(stdout=True))
+    await container.delete(force=True)
+    await docker.close()
     
 asyncio.run(f())
