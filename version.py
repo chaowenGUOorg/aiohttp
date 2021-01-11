@@ -1,2 +1,2 @@
 import os, pathlib
-print(pathlib.read_text(os.getenv('GITHUB_ENV')))
+print(pathlib.Path(os.getenv('GITHUB_ENV')).read_text())
