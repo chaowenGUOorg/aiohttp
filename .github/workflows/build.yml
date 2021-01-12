@@ -46,7 +46,7 @@ jobs:
               context: nginx
               tags: chaowenguo/nginx:aiohttp
         - uses: okteto/login@master
-          with:/
+          with:
               token: ${{secrets.OKTETO}}
         - uses: okteto/namespace@master
           with:
