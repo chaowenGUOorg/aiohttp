@@ -1,5 +1,5 @@
 from aiohttp import web
-import ssl, asyncpg, json, aredis, aiokafka
+import asyncpg, json, aredis, aiokafka
 import asyncio, uvloop
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
@@ -26,6 +26,4 @@ app = web.Application()
 app.add_routes([web.get('/', lambda _: web.HTTPFound('index.html')),
                 web.post('/ajax', post)])
 app.cleanup_ctx.append(database)
-context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-context.load_cert_chain(certfile='/encrypt/tls.crt', keyfile='/encrypt/tls.key')
-web.run_app(app, ssl_context=context)
+web.run_app(app)
