@@ -1,6 +1,2 @@
 deploy:
-- apt install -y python3
-- python3 build.py
-- kubectl delete secret tls --ignore-not-found
-- kubectl create secret tls tls --cert=pem --key=key
 - kubectl apply -f deployment.yml
