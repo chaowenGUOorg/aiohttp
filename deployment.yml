@@ -150,14 +150,6 @@ spec:
             containers:
             - image: chaowenguo/aiohttp
               name: web
-              volumeMounts:
-              - mountPath: /encrypt
-                readOnly: true
-                name: tls
-            volumes:
-            - secret:
-                secretName: tls
-              name: tls
 ---
 apiVersion: v1
 kind: Service
@@ -167,7 +159,7 @@ spec:
     selector:
         app: web
     ports:
-    - port: 8443
+    - port: 8080
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -185,14 +177,6 @@ spec:
             containers:
             - image: chaowenguo/chat:aiohttp
               name: chat
-              volumeMounts:
-              - mountPath: /encrypt
-                readOnly: true
-                name: tls
-            volumes:
-            - secret:
-                secretName: tls
-              name: tls
 ---
 apiVersion: v1
 kind: Service
@@ -202,49 +186,32 @@ spec:
     selector:
         app: chat
     ports:
-    - port: 8443
+    - port: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: nginx
+spec:
+    selector:
+        matchLabels:
+            app: nginx
+    template:
+        metadata:
+            labels:
+                app: nginx
+        spec:
+            containers:
+            - image: chaowenguo/nginx:aiohttp
+              name: nginx
 ---
 kind: Service
 apiVersion: v1
 metadata:
-    name: page
+    name: nginx
 spec:
+    type: loadBalancer
+    selector:
+        app: nginx
     ports:
-    - port: 443
----
-kind: Endpoints
-apiVersion: v1
-metadata:
-    name: page
-subsets:
-- addresses:
-  - ip: 185.199.108.153
-  ports:
-  - port: 443
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-    name: ingress
-    annotations:
-        dev.okteto.com/generate-host: 'true'
-        nginx.ingress.kubernetes.io/rewrite-target: /$1
-        nginx.ingress.kubernetes.io/backend-protocol: https
-        nginx.ingress.kubernetes.io/ssl-passthrough: 'true'
-        nginx.ingress.kubernetes.io/upstream-vhost: chaowenguoorg.github.io
-spec:
-    rules:
-    - http:
-          paths:
-          - path: /(.*\.(js|html))$
-            backend:
-                serviceName: page
-                servicePort: 443        
-          - path: /web/(.*)
-            backend:
-                serviceName: web
-                servicePort: 8443
-          - path: /chat/(.*)
-            backend:
-                serviceName: chat
-                servicePort: 8443
+    - port: 80
