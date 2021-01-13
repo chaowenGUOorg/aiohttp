@@ -197,14 +197,22 @@ metadata:
         nginx.ingress.kubernetes.io/server-snippet: |
             location /web {
                 rewrite ^/web/(.*)$ /$1 break;
-                proxy_pass http://web:8080/;
+                proxy_pass http://web/;
             }
         
             location /chat {
                 rewrite ^/chat/(.*)$ /$1 break;
-                proxy_pass http://chat:8080/;
+                proxy_pass http://chat/;
             }
         
             location ~ .*\.(js|html)$ {
                 proxy_pass https://chaowenguoorg.github.io;
             }
+spec:
+    rules:
+    - http:
+          paths:        
+          - path: /
+            backend:
+                serviceName: web
+                servicePort: 8080
