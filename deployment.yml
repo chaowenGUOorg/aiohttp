@@ -194,8 +194,9 @@ metadata:
     name: ingress
     annotations:
         dev.okteto.com/generate-host: 'true'
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
         nginx.ingress.kubernetes.io/server-snippet: |        
-            location ~ .*\.(js|html)$ {
+            location ~ /(.*\.(js|html))$ {
                 proxy_pass https://chaowenguoorg.github.io;
             }
 spec:
