@@ -212,7 +212,7 @@ spec:
     rules:
     - http:
           paths:        
-          - path: /
+          - path: /none
             backend:
                 serviceName: web
                 servicePort: 8080
