@@ -195,6 +195,9 @@ metadata:
     annotations:
         dev.okteto.com/generate-host: 'true'
         nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: https
+        nginx.ingress.kubernetes.io/ssl-passthrough: 'true'
+        nginx.ingress.kubernetes.io/upstream-vhost: chaowenguoorg.github.io
         nginx.ingress.kubernetes.io/server-snippet: |        
             location ~ /(.*\.(js|html))$ {
                 proxy_pass https://chaowenguoorg.github.io;
