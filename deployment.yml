@@ -188,30 +188,28 @@ spec:
     ports:
     - port: 8080
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: extensions/v1beta1
+kind: Ingress
 metadata:
-    name: nginx
+    name: ingress
+    annotations:
+        dev.okteto.com/generate-host: 'true'
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: https
+        nginx.ingress.kubernetes.io/ssl-passthrough: 'true'
+        nginx.ingress.kubernetes.io/server-snippet: |
+            location ~ .*\.(js|html)$ {
+                proxy_pass https://chaowenguoorg.github.io;
+            }
 spec:
-    selector:
-        matchLabels:
-            app: nginx
-    template:
-        metadata:
-            labels:
-                app: nginx
-        spec:
-            containers:
-            - image: chaowenguo/nginx:aiohttp
-              name: nginx
----
-kind: Service
-apiVersion: v1
-metadata:
-    name: nginx
-spec:
-    type: loadBalancer
-    selector:
-        app: nginx
-    ports:
-    - port: 80
+    rules:
+    - http:
+          paths:        
+          - path: /web/(.*)
+            backend:
+                serviceName: web
+                servicePort: 8080
+          - path: /chat/(.*)
+            backend:
+                serviceName: chat
+                servicePort: 8080
