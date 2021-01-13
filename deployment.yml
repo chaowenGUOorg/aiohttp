@@ -194,17 +194,7 @@ metadata:
     name: ingress
     annotations:
         dev.okteto.com/generate-host: 'true'
-        nginx.ingress.kubernetes.io/server-snippet: |
-            location /web {
-                rewrite ^/web/(.*)$ /$1 break;
-                proxy_pass http://web/;
-            }
-        
-            location /chat {
-                rewrite ^/chat/(.*)$ /$1 break;
-                proxy_pass http://chat/;
-            }
-        
+        nginx.ingress.kubernetes.io/server-snippet: |        
             location ~ .*\.(js|html)$ {
                 proxy_pass https://chaowenguoorg.github.io;
             }
@@ -212,7 +202,11 @@ spec:
     rules:
     - http:
           paths:        
-          - path: /none
+          - path: /web/(.*)
             backend:
                 serviceName: web
+                servicePort: 8080
+          - path: /chat/(.*)
+            backend:
+                serviceName: chat
                 servicePort: 8080
