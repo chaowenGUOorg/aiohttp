@@ -1,4 +1,4 @@
-from aiohttp import web
+import aiohttp.web
 import asyncpg, json, aredis, aiokafka
 import asyncio, uvloop
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
@@ -22,8 +22,8 @@ async def post(request):
         await request.app.get('cache').set(body, records)
     return web.Response(text=records)
 
-app = web.Application()
-app.add_routes([web.get('/', lambda _: web.HTTPFound('index.html')),
-                web.post('/ajax', post)])
+app = aiphttp.web.Application()
+app.add_routes([aiohttp.web.get('/', lambda _: web.HTTPFound('index.html')),
+                aiohttp.web.post('/ajax', post)])
 app.cleanup_ctx.append(database)
 web.run_app(app)
