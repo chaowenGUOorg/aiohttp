@@ -20,10 +20,10 @@ async def post(request):
     if not records:
         async with request.app.get('database').acquire() as connection: records = json.dumps([*map(dict, await connection.fetch(f'select * from{body}'))], default=str)
         await request.app.get('cache').set(body, records)
-    return web.Response(text=records)
+    return aiohttp.web.Response(text=records)
 
 app = aiphttp.web.Application()
-app.add_routes([aiohttp.web.get('/', lambda _: web.HTTPFound('index.html')),
+app.add_routes([aiohttp.web.get('/', lambda _: aiohttp.web.HTTPFound('index.html')),
                 aiohttp.web.post('/ajax', post)])
 app.cleanup_ctx.append(database)
-web.run_app(app)
+aiohttp.web.run_app(app)
