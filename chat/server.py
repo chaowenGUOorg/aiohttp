@@ -1,4 +1,4 @@
-from aiohttp import web, WSMsgType
+import aiohttp.web, aiohttp.WSMsgType
 import aiokafka
 import asyncio, uvloop
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
@@ -13,13 +13,13 @@ async def websocket(app):
     for _ in app.get('websocket'): await _.close()
     
 async def chat(request):
-    websocket = web.WebSocketResponse()
+    websocket = aiohttp.web.WebSocketResponse()
     await websocket.prepare(request)
     websocket.name = await websocket.receive_str()
     for _ in request.app.get('websocket'): await _.send_json({'join':'', 'name':websocket.name})
     request.app.get('websocket').add(websocket)
     async for message in websocket:
-        if message.type == WSMsgType.TEXT:
+        if message.type == aiohttp.WSMsgType.TEXT:
             message = message.json()
             if '' in message:
                 for _ in request.app.get('websocket'):
@@ -38,8 +38,8 @@ async def chat(request):
     for _ in request.app.get('websocket'): await _.send_json({'disconnect':'', 'name':websocket.name})
     return websocket
 
-app = web.Application()
-app.add_routes([web.get('/', lambda _: web.HTTPFound('index.html')),
-                web.get('/ws', chat)])
+app = aiohttp.web.Application()
+app.add_routes([aiohttp.web.get('/', lambda _: aiohttp.web.HTTPFound('index.html')),
+                aiohttp.web.get('/ws', chat)])
 app.cleanup_ctx.append(websocket)
-web.run_app(app)
+aiohttp.web.run_app(app)
