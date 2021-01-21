@@ -12,12 +12,7 @@ jobs:
           if: github.event_name == 'push'
           with:
               python-version: '3.x'
-        - run: |
-              python version.py
-              #sudo systemctl stop docker
-              #jq '.experimental=true' /etc/docker/daemon.json | sudo tee /etc/docker/daemon.json
-              #sudo systemctl start docker
-              #docker info
+        - run: python version.py
           if: github.event_name == 'push'
         - uses: docker/login-action@master
           if: github.event_name == 'push'
