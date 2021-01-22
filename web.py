@@ -22,7 +22,7 @@ async def post(request):
         await request.app.get('cache').set(body, records)
     return aiohttp.web.Response(text=records)
 
-app = aiphttp.web.Application()
+app = aiohttp.web.Application()
 app.add_routes([aiohttp.web.get('/', lambda _: aiohttp.web.HTTPFound('index.html')),
                 aiohttp.web.post('/ajax', post)])
 app.cleanup_ctx.append(database)
