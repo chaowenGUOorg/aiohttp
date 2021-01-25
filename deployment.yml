@@ -205,16 +205,6 @@ spec:
             - image: chaowenguo/nginx:aiohttp
               name: chat
 ---
-apiVersion: v1
-kind: Service
-metadata:
-    name: nginx
-spec:
-    selector:
-        app: nginx
-    ports:
-    - port: 80
----
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -227,10 +217,6 @@ spec:
     rules:
     - http:
           paths:
-          - path: /(.*\.(js|html))$
-            backend:
-                serviceName: nginx
-                servicePort: 80
           - path: /web/(.*)
             backend:
                 serviceName: web
