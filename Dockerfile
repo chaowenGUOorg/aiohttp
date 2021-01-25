@@ -2,7 +2,7 @@ FROM python
 RUN ["python", "-m", "venv", "--copies", "/usr/local/src/venv"]
 COPY web.py /usr/local/src/venv/
 WORKDIR /usr/local/src/venv
-RUN ["./bin/pip", "install", "aiohttp", "aiohttp_cors", "uvloop", "asyncpg", "aredis", "aiokafka"]
+RUN ["./bin/pip", "install", "aiohttp", "uvloop", "asyncpg", "aredis", "aiokafka"]
 
 FROM scratch
 ARG VERSION
