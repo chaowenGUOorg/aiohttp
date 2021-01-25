@@ -1,4 +1,4 @@
-import aiohttp.web, aiohttp_cors, asyncpg, json, aredis, aiokafka, asyncio, uvloop
+import aiohttp.web, asyncpg, json, aredis, aiokafka, asyncio, uvloop
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 async def database(app):
@@ -23,16 +23,5 @@ async def post(request):
 app = aiohttp.web.Application()
 app.add_routes([aiohttp.web.get('/', lambda _: aiohttp.web.HTTPFound('index.html')),
                 aiohttp.web.post('/ajax', post)])
-cors = aiohttp_cors.setup(app, defaults={
-    "*": aiohttp_cors.ResourceOptions(
-            allow_credentials=True,
-            expose_headers="*",
-            allow_headers="*",
-        )
-})
-
-# Configure CORS on all routes.
-for route in list(app.router.routes()):
-    cors.add(route)
 app.cleanup_ctx.append(database)
 aiohttp.web.run_app(app)
