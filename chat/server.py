@@ -37,7 +37,6 @@ async def chat(request):
     return websocket
 
 app = aiohttp.web.Application()
-app.add_routes([aiohttp.web.get('/', lambda _: aiohttp.web.HTTPFound('index.html')),
-                aiohttp.web.get('/ws', chat)])
+app.add_routes([aiohttp.web.get('/ws', chat)])
 app.cleanup_ctx.append(websocket)
 aiohttp.web.run_app(app)
