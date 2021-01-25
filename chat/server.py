@@ -1,6 +1,4 @@
-import aiohttp.web, aiohttp
-import aiokafka
-import asyncio, uvloop
+import aiohttp.web, aiohttp, aiokafka, asyncio, uvloop
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 async def websocket(app):
