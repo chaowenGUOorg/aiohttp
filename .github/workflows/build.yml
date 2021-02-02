@@ -41,4 +41,3 @@ jobs:
           with:
               namespace: chaowenguo
         - uses: okteto/pipeline@master
-        #- run: sudo kubectl --kubeconfig=$RUNNER_TEMP/_github_home/.kube/config rollout restart deploy web chat
