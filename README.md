@@ -392,7 +392,7 @@ class TimerHandle(Handle):
         if isinstance(other, TimerHandle):
             return self._when < other._when
         return NotImplemented
-总结：
+
 一个事件循环有一个 _ready 双端队列保存当前准备好执行的 callbacks，还有一个 _scheduled 优先队列保存注册了准备在将来执行的 callbacks，还有一个 _selector 在调用 select 的时候会得到当前准备好的 I/O 事件。
 
 事件循环 run_forever 的时候，会循环调用 _run_once 方法，而每次 _run_once 都会做四件事：
