@@ -1,8 +1,8 @@
-docker network create --ipv6 --subnet fd10::/64 aiohttp
-docker run -d --name postgres --network aiohttp chaowenguo/postgres
-docker run -d --name redis --network aiohttp redis
-docker run -d --name web --network aiohttp chaowenguo/aiohttp
-docker run -d --name chat --network aiohttp chaowenguo/chat:aiohttp
+docker network create --ipv6 --subnet fd10::/64 aiohttp<br>
+docker run -d --name postgres --network aiohttp chaowenguo/postgres<br>
+docker run -d --name redis --network aiohttp redis<br>
+docker run -d --name web --network aiohttp chaowenguo/aiohttp<br>
+docker run -d --name chat --network aiohttp chaowenguo/chat:aiohttp<br>
 docker run -d --name nginx --network aiohttp -p 443:443 -v /etc/letsencrypt/archive/chaowenguo.eu.org:/encrypt:ro chaowenguo/nginx
 
 https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line<br>
