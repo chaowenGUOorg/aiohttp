@@ -409,3 +409,11 @@ async def f():
             async with session.post(f'https://api.github.com/repos/chaowenGUOorg/{_}/dispatches', data=json.dumps({'event_type':'ping'}).encode(), auth=aiohttp.BasicAuth('chaowenGUO', parser.parse_args().github)) as _: pass
 
 asyncio.run(f())
+
+- uses: okteto/login@master
+          with:
+              token: ${{secrets.OKTETO}}
+        - uses: okteto/namespace@master
+          with:
+              namespace: chaowenguo
+        - uses: okteto/pipeline@master
