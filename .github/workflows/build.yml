@@ -6,7 +6,7 @@ jobs:
         - uses: actions/checkout@main
         - uses: actions/setup-python@main
           with:
-              python-version: '3.x'
+              python-version: 3.x
         - run: python version.py
         - uses: docker/login-action@master
           with:
