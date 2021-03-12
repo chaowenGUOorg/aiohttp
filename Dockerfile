@@ -15,4 +15,4 @@ COPY --from=python:slim /usr/local/lib/python$VERSION /usr/local/lib/python$VERS
 COPY --from=python:slim /lib/x86_64-linux-gnu /lib/x86_64-linux-gnu/
 COPY --from=python:slim /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu/
 COPY --from=python:slim /lib64 /lib64/
-ENTRYPOINT ["./bin/python", "web.py"]
+ENTRYPOINT ["./bin/python", "web.pyc"]
