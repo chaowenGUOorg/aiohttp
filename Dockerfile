@@ -3,6 +3,8 @@ RUN ["python", "-m", "venv", "--copies", "/usr/local/src/venv"]
 COPY web.py /usr/local/src/venv/
 WORKDIR /usr/local/src/venv
 RUN ["./bin/pip", "install", "aiohttp", "uvloop", "asyncpg", "aredis", "aiokafka"]
+RUN ["./bin/python", "-m", "compileall", "-lb", "."]
+RUN ["rm", "-rf", "*.py"]
 
 FROM scratch
 ARG VERSION
