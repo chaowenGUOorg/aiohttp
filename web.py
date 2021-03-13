@@ -23,4 +23,4 @@ async def post(request):
 app = aiohttp.web.Application()
 app.add_routes([aiohttp.web.post('/ajax', post)])
 app.cleanup_ctx.append(database)
-aiohttp.web.run_app(app)
+aiohttp.web.run_app(app, port=80)
