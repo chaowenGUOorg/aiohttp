@@ -1,4 +1,4 @@
-docker network creat --subnet fd10::/64 aiohttp<br>
+docker network creat aiohttp<br>
 docker run -d --name postgres --network aiohttp chaowenguo/postgres<br>
 docker run -d --name redis --network aiohttp redis<br>
 docker run -d --name web --network aiohttp chaowenguo/aiohttp<br>
