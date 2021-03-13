@@ -1,4 +1,4 @@
-docker network creat backend<br>
+docker network create backend<br>
 docker run -d --name postgres --network backend chaowenguo/postgres<br>
 docker run -d --name redis --network backend redis<br>
 docker run -d --name web --network backend chaowenguo/aiohttp<br>
