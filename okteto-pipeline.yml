@@ -1,3 +1,0 @@
-deploy:
-- kubectl apply -f deployment.yml
-- kubectl rollout restart deploy web chat
